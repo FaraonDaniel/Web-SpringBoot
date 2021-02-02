@@ -1,6 +1,5 @@
 package com.practica;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,14 +12,19 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
 import com.practica.model.Categoria;
+import com.practica.model.Vacante;
 import com.practica.repository.CategoriasRepository;
+import com.practica.repository.VacantesRepository;
 
 
 @SpringBootApplication
 public class JpaDemoApplication implements CommandLineRunner {
 
 	@Autowired
-	private CategoriasRepository repo;
+	private CategoriasRepository repoCategorias;
+	
+	@Autowired
+	private VacantesRepository repoVacantes;
 	
 	
 	public static void main(String[] args) {
@@ -29,55 +33,53 @@ public class JpaDemoApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println(repo);
+		System.out.println(repoCategorias);
 	}
 	
-	private void guardar() {
-		Categoria cat=new Categoria();
-		cat.setNombre("Finanzas");
-		cat.setDescripcion("Trabajos relacionados con finanzas");
-		repo.save(cat);
-		System.out.println(cat);
+	private void guardarCategoria(Categoria categoria) {
+		repoCategorias.save(categoria);
+
 	}
 	
-	private void eliminar(Categoria categoria) {
-		repo.delete(categoria);
+	private void eliminarCategoria(Categoria categoria) {
+		repoCategorias.delete(categoria);
 	}
 	
-	private void eliminarTodos() {
-		repo.deleteAllInBatch();
+	private void eliminarTodosCategoria() {
+		repoCategorias.deleteAllInBatch();
 	}
 	
-	private Categoria buscarPorId(Integer id) {
-		return repo.findById(id).get();
+	private Categoria buscarPorIdCategoria(Integer id) {
+		return repoCategorias.findById(id).get();
 	}
 	
-	private List<Categoria> buscarTodos() {
-		return repo.findAll();
+	private List<Categoria> buscarTodosCategoria() {
+		return repoCategorias.findAll();
 	}
 	
-	private List<Categoria> buscarTodosPaginacion() {
-		Page<Categoria> page = repo.findAll(PageRequest.of(0, 5)); //pagina 0-> del 1 al 5, pagina 1-> del 6 al 10, pagina 2-> del 11 al 15
+	private List<Categoria> buscarTodosPaginacionCategoria() {
+		Page<Categoria> page = repoCategorias.findAll(PageRequest.of(0, 5)); //pagina 0-> del 1 al 5, pagina 1-> del 6 al 10, pagina 2-> del 11 al 15
 		return page.getContent();
 	}
 	
-	private List<Categoria> buscarTodosOrdenadosNombreDescendiente() {
-		return repo.findAll(Sort.by("nombre").descending());
+	private List<Categoria> buscarTodosOrdenadosNombreDescendienteCategoria() {
+		return repoCategorias.findAll(Sort.by("nombre").descending());
 	}
 	
-	private List<Categoria> encontrarPorIds(List<Integer> ids) {
-		return repo.findAllById(ids);
+	private List<Categoria> encontrarPorIdsCategoria(List<Integer> ids) {
+		return repoCategorias.findAllById(ids);
 	}
 	
 	
 	private boolean actualizarCategoria(Categoria categoria) {
+		//TODO change to JPARepository mode
 		
-		Optional<Categoria> optional = repo.findById(categoria.getId());
+		Optional<Categoria> optional = repoCategorias.findById(categoria.getId());
 		if(optional.isPresent()) {
 			Categoria oldCategoria = optional.get();
 			oldCategoria.setDescripcion(categoria.getDescripcion());
 			oldCategoria.setNombre(categoria.getNombre());
-			repo.save(oldCategoria);
+			repoCategorias.save(oldCategoria);
 			return true;
 		}
 		else {
@@ -88,18 +90,32 @@ public class JpaDemoApplication implements CommandLineRunner {
 		}
 
 	}
-	private Long tamañoTabla() {
-		return repo.count();
+	private Long tamañoTablaCategoria() {
+		return repoCategorias.count();
 	}
 	
-	private boolean existeId(int id) {
-		return repo.existsById(id);
+	private boolean existeIdCategoria(int id) {
+		return repoCategorias.existsById(id);
 	}
 	
-	private boolean saveAll(List<Categoria> categoria) {
-		//en vez de pasar por parametro, recoger todas de la clse
-		return (repo.saveAll(categoria)!=null)?true:false;
+	private boolean saveAllCategoria(List<Categoria> categoria) {
+		//en vez de pasar por parametro, recoger todas de la clase
+		return (repoCategorias.saveAll(categoria)!=null)?true:false;
 		
 	}
+	
+	
+	//Vacantes
+	
+	private List<Vacante> buscarTodasVacantes() {
+		return repoVacantes.findAll();
+	}
+	
+	private void guardarVacante(Vacante vacante) {
+		repoVacantes.save(vacante);
+		System.out.println(vacante);
+	}
+	
+	
 
 }
