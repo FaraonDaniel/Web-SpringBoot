@@ -12,6 +12,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
 import com.practica.model.Categoria;
+import com.practica.model.Perfil;
+import com.practica.model.Usuario;
 import com.practica.model.Vacante;
 import com.practica.repository.CategoriasRepository;
 import com.practica.repository.PerfilesRepository;
@@ -124,6 +126,36 @@ public class JpaDemoApplication implements CommandLineRunner {
 		System.out.println(vacante);
 	}
 	
+	
+	// Perfiles
+	
+	private void guardarPerfilesAplicacion(List<Perfil> perfiles) {
+		repoPerfiles.saveAll(perfiles);
+	}
+	
+	private void guardarPerfil(Perfil perfil) {
+		repoPerfiles.save(perfil);
+	}
+	
+	// Usuario
+	/*
+	private void crearUsuarioConUnPerfil(Perfil perf) {
+		Usuario user = new Usuario();
+		user.agregarPerfil(perf);
+	}
+	*/
+	
+	private void guardarUsuariosAplicacion(List<Usuario> usuario) {
+		repoUsuarios.saveAll(usuario);
+	}
+	
+	private void guardarUsuario(Usuario usuario) {
+		repoUsuarios.save(usuario);
+	}
+	
+	private Usuario buscarUsuarioById(Integer ids) {
+		return repoUsuarios.findById(ids).get();
+	}
 	
 
 }
