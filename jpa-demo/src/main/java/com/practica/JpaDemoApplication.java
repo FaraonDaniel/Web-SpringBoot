@@ -14,6 +14,8 @@ import org.springframework.data.domain.Sort;
 import com.practica.model.Categoria;
 import com.practica.model.Vacante;
 import com.practica.repository.CategoriasRepository;
+import com.practica.repository.PerfilesRepository;
+import com.practica.repository.UsuariosRepository;
 import com.practica.repository.VacantesRepository;
 
 
@@ -25,6 +27,12 @@ public class JpaDemoApplication implements CommandLineRunner {
 	
 	@Autowired
 	private VacantesRepository repoVacantes;
+	
+	@Autowired
+	private UsuariosRepository repoUsuarios;
+	
+	@Autowired
+	private PerfilesRepository repoPerfiles;
 	
 	
 	public static void main(String[] args) {
