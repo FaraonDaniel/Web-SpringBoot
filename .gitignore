@@ -1,4 +1,5 @@
 empleos/src/main/resources/application.properties
+jpa-demo/src/main/resources/application.properties
 /tmp
 /empleos/img-vacantes
 .metadata
