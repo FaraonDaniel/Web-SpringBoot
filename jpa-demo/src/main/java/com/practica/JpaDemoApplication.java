@@ -120,10 +120,22 @@ public class JpaDemoApplication implements CommandLineRunner {
 	private List<Vacante> buscarTodasVacantes() {
 		return repoVacantes.findAll();
 	}
-	
 	private void guardarVacante(Vacante vacante) {
 		repoVacantes.save(vacante);
-		System.out.println(vacante);
+	}
+	private List<Vacante> buscarVacantesPorEstatus(String estatus) {
+		return repoVacantes.findByEstatus(estatus);
+	}
+	private List<Vacante> buscarVacantesPorEstatusOrdenDesC(int destacado, String estatus) {
+		return repoVacantes.findByDestacadoAndEstatusOrderByIdDesc(destacado, estatus);
+	}
+	
+	private List<Vacante> buscarVacantesPorSalario(double salarioMin, double salarioMax) {
+		return repoVacantes.findBySalarioBetweenOrderBySalarioDesc(salarioMin, salarioMax);
+	}
+	private List<Vacante> buscarVacantesVariosEstatus(String[] estatus) {
+		return repoVacantes.findByEstatusIn(estatus);
+		
 	}
 	
 	
