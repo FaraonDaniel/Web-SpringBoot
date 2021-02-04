@@ -85,7 +85,7 @@ public class VacantesController {
 		serviceVacantes.guardar(vacante);
 		attributes.addFlashAttribute("msg", "Registro Guardado");		
 		System.out.println("Vacante: " + vacante);		
-		return "redirect:/vacantes/index"; 
+		return "redirect:/vacantes/indexPaginate"; 
 	}
 		
 	@GetMapping("/delete/{id}")
@@ -93,7 +93,7 @@ public class VacantesController {
 		System.out.println("Borrando vacante con id: " + idVacante);
 		serviceVacantes.eliminar(idVacante);
 		attributes.addFlashAttribute("msg","La vacante fue eliminada!");
-		return "redirect:/vacantes/index";
+		return "redirect:/vacantes/indexPaginate";
 	}
 	@GetMapping("/edit/{id}")
 	public String editar(@PathVariable("id") int idVacante, Model model) {
