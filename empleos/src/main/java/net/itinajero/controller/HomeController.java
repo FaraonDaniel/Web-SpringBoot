@@ -4,11 +4,14 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -38,9 +41,18 @@ public class HomeController {
    	private IUsuariosService serviceUsuarios;
 	
 	@GetMapping("/index")
-	public String mostrarIndex(Authentication auth) {
+	public String mostrarIndex(Authentication auth, HttpSession session) {
 		String username = auth.getName();
-		System.out.println(username);
+		for (GrantedAuthority rol : auth.getAuthorities()) {
+			System.out.println("ROL:" + rol.getAuthority());
+		}
+		if(session.getAttribute("usuario")==null) {
+			Usuario usuario = serviceUsuarios.buscarPorUsername(username);
+			usuario.setPassword(null);
+			session.setAttribute("usuario", usuario);
+			System.out.println("Usuario: " + usuario);
+		}
+		
 		return "redirect:/";
 	}
 	
