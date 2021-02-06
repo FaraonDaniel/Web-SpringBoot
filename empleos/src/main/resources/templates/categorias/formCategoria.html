@@ -1,6 +1,6 @@
-<!DOCTYPE html>
+<!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
- <head>
+  <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -26,13 +26,7 @@
         <div class="card">
           <h4 class="card-header"><strong>Datos de la categoría</strong></h4>              
           <div class="card-body">
-            <form th:action="@{/categorias/save}" method="post" th:object="${categoria}">
-              <div th:if="${#fields.hasErrors('*')}"class='alert alert-danger' role='alert'>
-				Por favor corrija los siguientes errores:
-				<ul>
-				<li th:each="err : ${#fields.errors('*')}" th:text="${err}"/>
-				</ul>
-			  </div>              
+            <form th:action="@{/categorias/save}" th:object="${categoria}" method="post">             
               <div class="row">
                 <div class="col-md-6"> 
                   <div class="form-group">
@@ -51,7 +45,7 @@
                 </div>                
               </div> 
               <hr>
-              <button type="submit" title="Guardar el registro." class="btn btn-primary">Guardar</button>  
+              <button type="submit" class="btn btn-primary">Guardar</button>  
             </form>
           </div>
         </div>
